@@ -7,7 +7,6 @@ whereas Query stands for Querying data from a source.
 ### Technologies implemented: ###
 ---
 * ASP.NET Core 5.0 (with .NET Core 5.0)
-* ASP.NET Core
 * Entity Framework Core 5.0
 * AutoMapper
 * MediatR
