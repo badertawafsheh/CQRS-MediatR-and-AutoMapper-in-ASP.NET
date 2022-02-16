@@ -1,4 +1,5 @@
 using CQRS_With_MeditR_Demo.Data;
+using CQRS_With_MeditR_Demo.Services;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +41,7 @@ namespace CQRS_With_MeditR_Demo
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             //services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddMediatR(typeof(DemoLibraryMediatREntrypoint).Assembly);
+            services.AddTransient<IProductServices,ProductServices>();
 
 
         }
