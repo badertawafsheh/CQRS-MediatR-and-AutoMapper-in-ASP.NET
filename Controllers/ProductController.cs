@@ -45,7 +45,7 @@ namespace CQRS_With_MeditR_Demo.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(int id, UpdateProductCommand command)
         {
-            if (id != command.Id)
+            if (id != command.productDTO.Id)
             {
                 return BadRequest();
             }
