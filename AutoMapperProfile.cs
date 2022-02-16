@@ -9,6 +9,7 @@ namespace CQRS_With_MeditR_Demo
         public AutoMapperProfile()
         {
             CreateMap<Product, GetProductDTO>();
+            CreateMap<AddProductDTO, Product>();
         }
     }
 }
