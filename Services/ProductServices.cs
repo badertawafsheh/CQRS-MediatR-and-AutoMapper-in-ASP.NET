@@ -57,5 +57,14 @@ namespace CQRS_With_MeditR_Demo.Services
 
             }
         }
+
+        public async Task<GetProductDTO> DeleteProduct(int id)
+        {
+            var product = await _context.Products.Where(a => a.Id == id).FirstOrDefaultAsync();
+            if (product == null) return null;
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<GetProductDTO>(product);
+        }
     }
 }
