@@ -2,6 +2,7 @@
 using CQRS_With_MeditR_Demo.Data;
 using CQRS_With_MeditR_Demo.DTO;
 using CQRS_With_MeditR_Demo.Model;
+using CQRS_With_MeditR_Demo.Services;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,27 +14,15 @@ namespace CQRS_With_MeditR_Demo.Features.ProductFeatures.Commands
         public AddProductDTO productDto { get; set; }
         public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, GetProductDTO>
         {
-            private readonly DataContext _context;
-            private readonly IMapper _mapper;
+            private readonly IProductServices _productServices;
 
-            public CreateProductCommandHandler(DataContext context, IMapper mapper)
+            public CreateProductCommandHandler(IProductServices productServices)
             {
-                _context = context;
-                _mapper = mapper;
+                _productServices = productServices;
             }
             public async Task<GetProductDTO> Handle(CreateProductCommand request, CancellationToken cancellationToken)
             {
-                //var product = new Product();
-                //product.Barcode = request.product.Barcode;
-                //product.Name = request.product.Name;
-                //product.Rate = request.product.Rate;
-                //product.Description = request.product.Description;
-                //product.IsActive = request.product.IsActive;
-                var product = _mapper.Map<Product>(request.productDto);
-
-                await _context.Products.AddAsync(product);
-                await _context.SaveChangesAsync();
-                return _mapper.Map<GetProductDTO>(product);
+                return await _productServices.CreateProduct(request.productDto);
             }
         }
     }

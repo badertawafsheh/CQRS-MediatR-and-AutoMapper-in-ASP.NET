@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CQRS_With_MeditR_Demo.Data;
 using CQRS_With_MeditR_Demo.DTO;
+using CQRS_With_MeditR_Demo.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,6 @@ namespace CQRS_With_MeditR_Demo.Services
             _context = context;
             _mapper = mapper;
         }
-
         public async Task<List<GetProductDTO>> GetAllProducts()
         {
             var products = await _context.Products.Select(p => _mapper.Map<GetProductDTO>(p)).ToListAsync();
@@ -34,5 +34,13 @@ namespace CQRS_With_MeditR_Demo.Services
 
             return _mapper.Map<GetProductDTO>(product);
         }
+        public async Task<GetProductDTO> CreateProduct(AddProductDTO productDTO)
+        {
+            var product = _mapper.Map<Product>(productDTO);
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<GetProductDTO>(product);
+        }
+
     }
 }
