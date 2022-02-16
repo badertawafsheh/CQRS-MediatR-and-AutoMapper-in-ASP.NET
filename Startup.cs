@@ -32,6 +32,7 @@ namespace CQRS_With_MeditR_Demo
         {
 
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CQRS_With_MeditR_Demo", Version = "v1" });

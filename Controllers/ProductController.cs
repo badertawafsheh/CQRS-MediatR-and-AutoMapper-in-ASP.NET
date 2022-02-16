@@ -1,4 +1,5 @@
-﻿using CQRS_With_MeditR_Demo.Features.ProductFeatures.Commands;
+﻿using AutoMapper;
+using CQRS_With_MeditR_Demo.Features.ProductFeatures.Commands;
 using CQRS_With_MeditR_Demo.Features.ProductFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,12 @@ namespace CQRS_With_MeditR_Demo.Controllers
     public class ProductController : ControllerBase
     {
         private IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        //public ProductController(IMediator mediator)
-        //{
-        //    _mediator = mediator;
-        //}
+        public ProductController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
         [HttpGet]
@@ -41,13 +43,13 @@ namespace CQRS_With_MeditR_Demo.Controllers
 
         }
         [HttpPut]
-        public async Task<IActionResult> Put(int id,UpdateProductCommand command)
+        public async Task<IActionResult> Put(int id, UpdateProductCommand command)
         {
             if (id != command.Id)
             {
                 return BadRequest();
             }
-            return Ok(await Mediator.Send(command));   
+            return Ok(await Mediator.Send(command));
         }
 
     }
