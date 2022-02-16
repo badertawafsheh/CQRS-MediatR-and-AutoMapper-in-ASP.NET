@@ -6,6 +6,7 @@ namespace CQRS_With_MeditR_Demo.Services
 {
     public interface IProductServices
     {
-        Task<GetProductDTO> GetProductById (int id);
+        Task<List<GetProductDTO>> GetAllProducts();
+        Task<GetProductDTO> GetProductById(int id);
     }
 }

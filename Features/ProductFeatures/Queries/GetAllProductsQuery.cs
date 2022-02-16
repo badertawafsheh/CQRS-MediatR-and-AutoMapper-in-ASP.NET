@@ -2,6 +2,7 @@
 using CQRS_With_MeditR_Demo.Data;
 using CQRS_With_MeditR_Demo.DTO;
 using CQRS_With_MeditR_Demo.Model;
+using CQRS_With_MeditR_Demo.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -15,20 +16,15 @@ namespace CQRS_With_MeditR_Demo.Features.ProductFeatures.Queries
     {
         public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, List<GetProductDTO>>
         {
-            private readonly DataContext _context;
-            private readonly IMapper _mapper;
+            private readonly IProductServices _productServices;
 
-            public GetAllProductsQueryHandler(DataContext context, IMapper mapper)
+            public GetAllProductsQueryHandler(IProductServices productServices)
             {
-                _context = context;
-                _mapper = mapper;
+                _productServices = productServices;
             }
             public async Task<List<GetProductDTO>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
             {
-                var products = await _context.Products.Select(p=>_mapper.Map<GetProductDTO>(p)).ToListAsync();
-                if (products == null) return null;
-
-                return products;
+                return await _productServices.GetAllProducts();
             }
         }
     }

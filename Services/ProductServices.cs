@@ -19,6 +19,14 @@ namespace CQRS_With_MeditR_Demo.Services
             _mapper = mapper;
         }
 
+        public async Task<List<GetProductDTO>> GetAllProducts()
+        {
+            var products = await _context.Products.Select(p => _mapper.Map<GetProductDTO>(p)).ToListAsync();
+            if (products == null) return null;
+
+            return products;
+        }
+
         public async Task<GetProductDTO> GetProductById(int Id)
         {
             var product = _context.Products.Where(a => a.Id == Id).FirstOrDefault();
