@@ -4,11 +4,11 @@ whereas Query stands for Querying data from a source.
 
 **CQRS** most commonly used patterns that helps architect the Solution to accommodate the Onion Architecture.
 
-Technologies implemented:
+### Technologies implemented: ###
 ---
-*ASP.NET Core 5.0 (with .NET Core 5.0)
-*ASP.NET Core
-*Entity Framework Core 5.0
-*AutoMapper
-*MediatR
-*Swagger UI
+* ASP.NET Core 5.0 (with .NET Core 5.0)
+* ASP.NET Core
+* Entity Framework Core 5.0
+* AutoMapper
+* MediatR
+* Swagger UI
