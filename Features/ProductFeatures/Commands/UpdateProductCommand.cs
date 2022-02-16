@@ -2,6 +2,7 @@
 using CQRS_With_MeditR_Demo.Data;
 using CQRS_With_MeditR_Demo.DTO;
 using CQRS_With_MeditR_Demo.Model;
+using CQRS_With_MeditR_Demo.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -15,28 +16,15 @@ namespace CQRS_With_MeditR_Demo.Features.ProductFeatures.Commands
         public GetProductDTO productDTO { get; set; }
         public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, GetProductDTO>
         {
-            private readonly DataContext _context;
-            private readonly IMapper _mapper;
+            private readonly IProductServices _productServices;
 
-            public UpdateProductCommandHandler(DataContext context,IMapper mapper)
+            public UpdateProductCommandHandler(IProductServices productServices)
             {
-                _context = context;
-                _mapper = mapper;
+                _productServices = productServices;
             }
             public async Task<GetProductDTO> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
             {
-                var product = await _context.Products.FirstOrDefaultAsync(a => a.Id == request.productDTO.Id);
-                if (product == null) return null;
-                else
-                {
-                    product.Name = request.productDTO.Name;
-                    product.Description = request.productDTO.Description;
-                    product.Rate = request.productDTO.Rate;
-                    product.Barcode = request.productDTO.Barcode;
-                    await _context.SaveChangesAsync();
-                    return _mapper.Map<GetProductDTO>(product);
-
-                }
+                return await _productServices.UpdateProduct(request.productDTO.Id,request.productDTO);
 
             }
         }

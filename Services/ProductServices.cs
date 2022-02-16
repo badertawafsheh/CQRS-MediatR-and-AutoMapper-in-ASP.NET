@@ -42,5 +42,20 @@ namespace CQRS_With_MeditR_Demo.Services
             return _mapper.Map<GetProductDTO>(product);
         }
 
+        public async Task<GetProductDTO> UpdateProduct(int id, GetProductDTO productDTO)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(a => a.Id == productDTO.Id);
+            if (product == null) return null;
+            else
+            {
+                product.Name = productDTO.Name;
+                product.Description = productDTO.Description;
+                product.Rate = productDTO.Rate;
+                product.Barcode = productDTO.Barcode;
+                await _context.SaveChangesAsync();
+                return _mapper.Map<GetProductDTO>(product);
+
+            }
+        }
     }
 }

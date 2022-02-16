@@ -9,5 +9,6 @@ namespace CQRS_With_MeditR_Demo.Services
         Task<List<GetProductDTO>> GetAllProducts();
         Task<GetProductDTO> GetProductById(int id);
         Task<GetProductDTO> CreateProduct(AddProductDTO productDTO);
+        Task<GetProductDTO> UpdateProduct(int id , GetProductDTO productDTO);
     }
 }
